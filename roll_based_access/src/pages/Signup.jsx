@@ -1,7 +1,10 @@
 import React, { useReducer, useState } from "react";
 import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users"
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,30 +21,64 @@ function SignUp() {
     }
   }
 
- async function signUpWithUserData() {
-    try{
-      const userData ={
+  async function checkUserExist() {
+    try {
+      const response = await fetch(basURl);
+      const userData = await response.json();
+      if (userData.some((user) => user.userName == userName)) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    catch (error) {
+      console.log("ERROR WHILE FETCHING ALL THE USER DATA:::", error);
+      return true;
+    }
+  }
+
+  async function signUpWithUserData() {
+    try {
+      const newUser = {
         userName,
         password,
         email,
         address,
         role
       }
-      const response = await fetch("/api/user",{
-        method:"POST",
-        body: JSON.stringify(userData),
+
+      const response = await fetch(basURl, {
+        method: "POST",
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(newUser)
       });
-      const data =await response.json();
-      console.log("Data from MockAPI:::",data);
-    }catch(error){
-      console.log("ERROR WHILE CALLING SIGN UP MOCKING API...",error);
+
+      const data = await response.json();
+      console.log("Data from MockAPI:::", data);
+
+    } catch (error) {
+      console.log("ERROR WHILE CALLING SIGN UP MOCKING API...", error);
     }
   }
 
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
     if (validateEmail) {
-      signUpWithUserData();
+      if (!await checkUserExist()) {
+        await signUpWithUserData();
+        toast.success("Signed up successfully");
+        navigate("/login");
+      }
+      else {
+        toast.error("user already exist");
+      }
+      setAddress("");
+      setEmail("");
+      setUserName("");
+      setRole("");
+      setPassword("");
+      return;
     }
     else {
       toast.error("Enter a valid Email");
