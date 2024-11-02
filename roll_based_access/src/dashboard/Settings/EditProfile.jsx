@@ -32,20 +32,20 @@ export default function EditProfile() {
     toast.success("user updated successfully");
     navigate("/dashboard/my-profile")
    }catch(error){
-    console.log("ERROR IN PRINTING THE USER::::",error);
+    console.log("ERROR IN UPDATING PROFILE OF THE USER::::",error);
    }
   }
   return (
     <>
       <form onSubmit={submitProfileForm} className="text-[#f2f2f5]">
         {/* Profile Information */}
-        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-[#032833] bg-[#5e94f0] p-8 px-12">
+        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-[#032833] bg-indigo-900 p-8 px-12">
           <h2 className="text-lg font-semibold text-[#F1F2FF]">
             Profile Information
           </h2>
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="firstName" className="lable-style">
+              <label htmlFor="firstName" >
                 Username
               </label>
               <input
@@ -53,7 +53,7 @@ export default function EditProfile() {
                 name="username"
                 id="username"
                 placeholder="Enter username"
-                className="form-style"
+                className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-200"
                 defaultValue={user?.userName}
                 onChange={(e)=>{
                   setUserName(e.target.value);
@@ -61,7 +61,7 @@ export default function EditProfile() {
               />
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="lastName" className="lable-style">
+              <label htmlFor="lastName" >
                 email
               </label>
               <input
@@ -69,7 +69,7 @@ export default function EditProfile() {
                 name="email"
                 id="email"
                 placeholder="Enter your email"
-                className="form-style"
+                className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-200"
                 defaultValue={user?.email}
                 onChange={(e)=>{
                   setEmail(e.target.value);
@@ -77,14 +77,14 @@ export default function EditProfile() {
               />
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
-              <label htmlFor="address" className="lable-style">
+              <label htmlFor="address" >
                 Address
               </label>
               <textarea
                 id="address"
-                rows="3"
+                rows="1"
                 placeholder="Enter your address"
-                className="form-style"
+                className="w-full px-4 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-200"
                 defaultValue={user?.address}
                 onChange={(e)=>{
                   setAddress(e.target.value);

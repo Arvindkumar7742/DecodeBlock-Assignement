@@ -7,7 +7,7 @@ export const Settings = () => {
 
   return (
     <div>
-       <h1 className="mb-14 text-3xl font-medium text-[#6670f6]">
+       <h1 className="mb-14 text-3xl font-medium text-indigo-500">
         Edit Profile
       </h1>
       <EditProfile/>

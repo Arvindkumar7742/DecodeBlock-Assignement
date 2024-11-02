@@ -1,13 +1,24 @@
+import toast from "react-hot-toast";
 import { FiTrash2 } from "react-icons/fi"
 import { useNavigate } from "react-router-dom"
 
 export default function DeleteAccount() {
 
+  const baseURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users";
   const user = JSON.parse(localStorage.getItem("blog-user"));
   const navigate = useNavigate()
 
   async function handleDeleteAccount() {
-    //delete account kerna hai
+    try{
+      await fetch(baseURl + `/${user.id}`,{
+        method:"Delete"
+      });
+      localStorage.clear();
+      toast.success("User deleted successfully");
+      navigate("/");
+    }catch(error){
+      console.log("ERROR WHILE DELETING THE USER",error);
+    }
   }
 
   return (
