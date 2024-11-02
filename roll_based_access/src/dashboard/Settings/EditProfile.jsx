@@ -1,12 +1,39 @@
 import { useNavigate } from "react-router-dom"
 import IconBtn from "../../Components/IconBtn"
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function EditProfile() {
-  const user = JSON.parse(localStorage.getItem("blog-user"));
-  const navigate = useNavigate()
 
-  const submitProfileForm = async (data) => {
-   //submit kerna hai
+  const navigate = useNavigate()
+  const [userName,setUserName] = useState(null);
+  const [email,setEmail] = useState(null);
+  const [address,setAddress] = useState(null);
+
+  const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users";
+  const user = JSON.parse(localStorage.getItem("blog-user"));
+
+  const submitProfileForm =async(e) => {
+    e.preventDefault();
+   try{
+    const updatedUser = {
+      ...user,
+      userName:userName ? userName :user.userName,
+      email:email ? email :user.email,
+      address:address ? address :user.address,
+    }
+    const response = await fetch(basURl+ `/${user.id}`,{
+      method:"PUT",
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(updatedUser)
+    });
+    const data = await response.json();
+    localStorage.setItem("blog-user",JSON.stringify(data));
+    toast.success("user updated successfully");
+    navigate("/dashboard/my-profile")
+   }catch(error){
+    console.log("ERROR IN PRINTING THE USER::::",error);
+   }
   }
   return (
     <>
@@ -28,6 +55,9 @@ export default function EditProfile() {
                 placeholder="Enter username"
                 className="form-style"
                 defaultValue={user?.userName}
+                onChange={(e)=>{
+                  setUserName(e.target.value);
+                }}
               />
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
@@ -41,6 +71,9 @@ export default function EditProfile() {
                 placeholder="Enter your email"
                 className="form-style"
                 defaultValue={user?.email}
+                onChange={(e)=>{
+                  setEmail(e.target.value);
+                }}
               />
             </div>
             <div className="flex flex-col gap-2 lg:w-[48%]">
@@ -53,6 +86,9 @@ export default function EditProfile() {
                 placeholder="Enter your address"
                 className="form-style"
                 defaultValue={user?.address}
+                onChange={(e)=>{
+                  setAddress(e.target.value);
+                }}
               />
             </div>
           </div>
