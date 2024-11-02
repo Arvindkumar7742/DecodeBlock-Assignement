@@ -15,6 +15,8 @@ import { Settings } from "./dashboard/Settings/Settings";
 import { Dashboard } from './pages/Dashboard';
 import { PrivateRoute } from "./pages/PrivateRoute"
 import { UserDashboard } from './dashboard/user/UserDashboard';
+import { ManageUsers } from './dashboard/admin/ManageUsers';
+import { AdminDashboard } from './dashboard/admin/AdminDashboard';
 
 function App() {
 
@@ -47,9 +49,12 @@ function App() {
             {
               user?.role == ROLE_TYPE.admin &&
               <>
-                {/* <Route path="/dashboard/my-courses"
-                element={<MyCourses />}
-              ></Route> */}
+                <Route path="/dashboard/manage-users"
+                element={<ManageUsers />}
+              ></Route>
+              <Route path="/dashboard/admin"
+                element={<AdminDashboard />}
+              ></Route>
               </>
             }
           </Route>

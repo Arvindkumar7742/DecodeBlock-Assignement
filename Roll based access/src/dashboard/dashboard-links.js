@@ -23,7 +23,7 @@ export const sidebarLinks = [
   },
   {
     id: 4,
-    name: "Dashboard",
+    name: "Manage users",
     path: "/dashboard/manage-users",
     type: ROLE_TYPE.admin,
     icon: "VscCodeOss",
