@@ -14,4 +14,18 @@ export const sidebarLinks = [
     type: ROLE_TYPE.user,
     icon: "VscDashboard",
   },
+  {
+    id: 3,
+    name: "Dashboard",
+    path: "/dashboard/admin",
+    type: ROLE_TYPE.admin,
+    icon: "VscDashboard",
+  },
+  {
+    id: 4,
+    name: "Dashboard",
+    path: "/dashboard/manage-users",
+    type: ROLE_TYPE.admin,
+    icon: "VscCodeOss",
+  },
 ];

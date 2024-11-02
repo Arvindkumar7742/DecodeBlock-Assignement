@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { BlogCard } from './BlogCard';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export const BlogPage = () => {
-
     const navigate = useNavigate();
     const [blogsData, setBlogsData] = useState(null);
 
-    const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/posts";
+    const baseURL = "https://6724bca8c39fedae05b28c19.mockapi.io/posts";
 
     useEffect(() => {
         async function fetchBlogsData() {
             try {
-                const response = await fetch(basURl);
+                const response = await fetch(baseURL);
                 const data = await response.json();
-                console.log("data of blogs:::",data);
                 setBlogsData(data);
             } catch (error) {
                 console.log("ERROR IN FETCHING THE BLOG DATA::::", error);
-                toast.error("error in fetching the blog data");
+                toast.error("Error in fetching the blog data");
             }
         }
         fetchBlogsData();
@@ -30,8 +29,25 @@ export const BlogPage = () => {
         navigate("/login");
         return;
     }
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-indigo-100 py-10 px-5">
+            {/* Back Button */}
+            {
+                user ? <button
+                    onClick={() => navigate("/dashboard/my-profile")}
+                    className="flex items-center text-indigo-600 font-semibold mb-6 hover:text-indigo-800 transition-colors"
+                >
+                    <FaArrowLeft className="mr-2" /> Back to Profile
+                </button> : <button
+                    onClick={() => navigate("/")}
+                    className="flex items-center text-indigo-600 font-semibold mb-6 hover:text-indigo-800 transition-colors"
+                >
+                    <FaArrowLeft className="mr-2" /> Back to Home
+                </button>
+            }
+
+            {/* Header */}
             <h1 className="text-4xl md:text-5xl font-extrabold text-center text-indigo-700 mb-8">
                 Welcome to Code Blogs
             </h1>
@@ -39,11 +55,12 @@ export const BlogPage = () => {
                 Discover the latest insights in AI, ML, and Technology.
             </p>
 
+            {/* Blog Cards */}
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
                 {blogsData && blogsData.map((blog) => (
-                    <BlogCard key={blog.id} title={blog.title} description={blog.description} imageUrl={blog.imageUrl}/>
+                    <BlogCard key={blog.id} blog={blog} />
                 ))}
             </div>
         </div>
-    )
+    );
 }

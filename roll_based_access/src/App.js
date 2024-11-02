@@ -14,6 +14,7 @@ import MyProfile from './dashboard/MyProfile';
 import { Settings } from "./dashboard/Settings/Settings";
 import { Dashboard } from './pages/Dashboard';
 import { PrivateRoute } from "./pages/PrivateRoute"
+import { UserDashboard } from './dashboard/user/UserDashboard';
 
 function App() {
 
@@ -36,10 +37,10 @@ function App() {
             {
               user?.role == ROLE_TYPE.user &&
               <>
-                {/* <Route path="/dashboard/enrolled-courses"
-                element={<EnrolledCourses />}
+                <Route path="/dashboard/user"
+                element={<UserDashboard />}
               ></Route>
-              */}
+             
               </>
             }
 

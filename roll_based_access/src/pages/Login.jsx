@@ -7,6 +7,7 @@ function Login() {
   const navigate = useNavigate();
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
+  const user = JSON.parse(localStorage.getItem("blog-user"));
 
   const validateEmail = () => {
     var regex = /^([a-zA-z0-9\._]+)@([a-zA-z0-9]+)\.([a-z]+)(\.([a-z]+))?$/
@@ -64,6 +65,12 @@ function Login() {
       return;
     }
   }
+
+  if(user){
+    navigate("/dashboard/my-profile");
+    return;
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-200">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
