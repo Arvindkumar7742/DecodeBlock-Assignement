@@ -50,7 +50,7 @@ function Login() {
       if (flag.exist) {
         toast.success("logged in successfully");
         localStorage.setItem("blog-user",JSON.stringify(flag.user));
-        navigate("/dashboard");
+        navigate(`/dashboard/my-profile`);
       }
       else {
         toast.error(flag.message);
