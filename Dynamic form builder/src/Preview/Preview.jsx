@@ -1,15 +1,53 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { createServer } from "miragejs"
 
 export const Preview = () => {
+
+  const navigate = useNavigate();
   const location = useLocation();
   const receivedData = location.state?.data;
 
+  createServer({
+    routes() {
+      const savedData =null;
+      this.post("/api/formData", (schema, request) => {
+        const data = JSON.parse(request.requestBody); 
+        localStorage.setItem("saved-data",JSON.stringify(data));
+        return { message: "Data received successfully", data };
+      });
+      
+      this.get("/api/formData", () => {
+        return JSON.parse(localStorage.getItem("saved-data"));
+      });
+    },
+  });
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("printing the data::",data);
+  const onSubmit =async (data) => {
+    try {
+      const response = await fetch("/api/formData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data), 
+      });
+
+      const result = await response.json(); 
+
+      if (response.ok) {
+        console.log("Data submitted successfully:", result);
+        navigate("/success/submission");
+      } else {
+        console.error("Error submitting data:", result);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+
+    }
   };
 
   return (

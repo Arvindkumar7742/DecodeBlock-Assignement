@@ -1,19 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { formFields } from '../utils/FormFields.js';
 import { Modal } from '../Components/Modal';
 import { FormField } from '../FormFields/FormField.jsx';
 import { MdAdd } from "react-icons/md";
 
 export const Container = () => {
-    const [formData, setFormData] = useState([]);
+    const [formData, setFormData] = useState(localStorage.getItem("formData") ? JSON.parse(localStorage.getItem("formData")) : []);
     const [openModal, setOpenModal] = useState(null);
-    console.log("update form data1212:::",JSON.stringify(formData));
 
     function openModalHandler(field) {
         setOpenModal({
             field
         })
     }
+
+    localStorage.setItem("formData", JSON.stringify(formData))
+
+
     return (
         <div className="bg-gray-300 p-8 w-full rounded-lg shadow-lg mx-4">
             <header className="text-center mb-8">
@@ -61,10 +64,10 @@ export const Container = () => {
             </div>
 
             <div>
-                <FormField formData={formData} setFormData={setFormData}/>
+                <FormField formData={formData} setFormData={setFormData} />
             </div>
             {
-                openModal && <Modal openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData}/>
+                openModal && <Modal openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData} />
             }
         </div>
     )
