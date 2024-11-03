@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { formFields } from '../utils/FormFields.js';
 import { Modal } from '../Components/Modal';
 import { FormField } from '../FormFields/FormField.jsx';
+import { MdAdd } from "react-icons/md";
 
 export const Container = () => {
     const [formData, setFormData] = useState([]);
@@ -27,32 +28,32 @@ export const Container = () => {
                             return (<button
                                 key={field.id}
                                 onClick={() => openModalHandler(field.type)}
-                                className="bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base transition duration-200">
-                                Add Input
+                                className="flex flex-row justify-center items-center gap-2 bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-base transition duration-200">
+                                <MdAdd /> Add Input
                             </button>)
                         }
                         else if (field.type === 'dropdown') {
                             return (<button
                                 key={field.id}
                                 onClick={() => openModalHandler(field.type)}
-                                className="bg-purple-500 text-white py-3 px-6 rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 text-base transition duration-200">
-                                Add Dropdown
+                                className="flex flex-row justify-center items-center gap-2 bg-purple-500 text-white py-3 px-6 rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 text-base transition duration-200">
+                                <MdAdd /> Add Dropdown
                             </button>)
                         }
                         else if (field.type === 'checkbox') {
                             return (<button
                                 key={field.id}
                                 onClick={() => openModalHandler(field.type)}
-                                className="bg-green-500 text-white py-3 px-6 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 text-base transition duration-200">
-                                Add Checkbox
+                                className=" flex flex-row justify-center items-center gap-2 bg-green-500 text-white py-3 px-6 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 text-base transition duration-200">
+                                <MdAdd /> Add Checkbox
                             </button>)
                         }
                         else {
                             return (<button
                                 key={field.id}
                                 onClick={() => openModalHandler(field.type)}
-                                className="bg-red-500 text-white py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 text-base transition duration-200">
-                                Add Textarea
+                                className="flex flex-row justify-center items-center gap-2 bg-red-500 text-white py-3 px-6 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 text-base transition duration-200">
+                                <MdAdd /> Add Textarea
                             </button>)
                         }
                     })
