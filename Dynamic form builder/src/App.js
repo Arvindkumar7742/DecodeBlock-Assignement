@@ -3,7 +3,7 @@ import { Container } from './main/Container';
 
 function App() {
   return (
-    <div className='flex flex-row w-screen h-screen'>
+    <div className='flex flex-row w-screen min-h-screen'>
         <Container/>
     </div>
   );

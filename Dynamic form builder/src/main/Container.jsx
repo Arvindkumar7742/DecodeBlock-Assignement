@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { formFields } from '../utils/FormFields.js';
 import { Modal } from '../Components/Modal';
+import { FormField } from '../FormFields/FormField.jsx';
 
 export const Container = () => {
     const [formData, setFormData] = useState([]);
     const [openModal, setOpenModal] = useState(null);
-    console.log("update form data1212:::",formData);
+    console.log("update form data1212:::",JSON.stringify(formData));
 
     function openModalHandler(field) {
         setOpenModal({
@@ -13,7 +14,7 @@ export const Container = () => {
         })
     }
     return (
-        <div className="bg-gray-200 p-8 w-full rounded-lg shadow-lg mx-4">
+        <div className="bg-gray-300 p-8 w-full rounded-lg shadow-lg mx-4">
             <header className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-800">Welcome to the Dynamic Form Builder!</h2>
                 <p className="text-gray-600 text-lg mt-2">Add, edit, or remove form inputs to build your custom form.</p>
@@ -56,6 +57,10 @@ export const Container = () => {
                         }
                     })
                 }
+            </div>
+
+            <div>
+                <FormField formData={formData}/>
             </div>
             {
                 openModal && <Modal openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData}/>
