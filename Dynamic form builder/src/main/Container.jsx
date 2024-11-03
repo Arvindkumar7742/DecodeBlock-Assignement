@@ -60,7 +60,7 @@ export const Container = () => {
             </div>
 
             <div>
-                <FormField formData={formData}/>
+                <FormField formData={formData} setFormData={setFormData}/>
             </div>
             {
                 openModal && <Modal openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData}/>
