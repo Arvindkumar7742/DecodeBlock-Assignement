@@ -1,70 +1,61 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Admin Dashboard with Role-Based Access Control (RBAC)
 
-## Available Scripts
+This Admin Dashboard project provides an interface for managing users and their activities. The dashboard includes role-based access control (RBAC) to limit access to specific features depending on the user’s role (Admin or User). The application is built with React.js and features data visualization for user statistics, responsive design, and CRUD operations using a mock API.
 
-In the project directory, you can run:
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### User Interface
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- A main dashboard overview panel displays key user statistics (e.g., active users, new sign-ups).
+- Navigation options for user management (add, edit, delete) and viewing user activities.
+Role-Based Access Control (RBAC)
 
-### `npm test`
+- Admins have full access to manage users, including adding, editing, deleting, and viewing activity logs.
+- Regular users can only view their profiles and see user statistics.
+API Integration
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Mock API integration enables fetching user data and performing CRUD operations.
+Data Visualization
 
-### `npm run build`
+- Charts and graphs (powered by Chart.js) visualize user statistics, including user growth over time.
+- Responsive Design: The dashboard is fully responsive and optimized for desktop and mobile devices.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tech stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React.js: Frontend framework used for building user interfaces.
+- React Router: For navigation and managing nested routes.
+- Chart.js: Data visualization library for displaying user growth statistics.
+- Mockapi.io: Mock API library to simulate API responses for CRUD operations.
+- CSS Flexbox and Grid: For responsive layout and design.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Prerequisites
+- Node.js and npm installed
+- API server for saving and submitting forms, or an API endpoint available for integration
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Installation
+- Clone the repository:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+git clone https://github.com/Arvindkumar7742/DecodeBlock-Assignement.git
+```
+- Navigaet to folder
+```
+cd DecodeBlock-Assignement
+cd Roll based access
+```
 
-## Learn More
+- Install dependecies
+```
+npm install
+```
+- Start the application:
+```
+npm run start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
