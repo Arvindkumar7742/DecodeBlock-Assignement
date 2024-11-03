@@ -46,7 +46,8 @@ function SignUp() {
         password,
         email,
         address,
-        role
+        role,
+        createdAt:Date.now(),
       }
 
       const response = await fetch(basURl, {
