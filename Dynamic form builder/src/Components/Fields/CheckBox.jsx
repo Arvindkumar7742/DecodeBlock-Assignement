@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form';
 import { RxCross2 } from 'react-icons/rx';
 
-export const CheckBox = ({ openModal, setOpenModal, setFormData }) => {
+export const CheckBox = ({ openModal, setOpenModal, setFormData,editFlag,setEditOpenModal ,setEditFlag , modalData, setModalData }) => {
     const {
         register,
         handleSubmit,
         control,
         formState: { errors },
         reset,
+        setValue
     } = useForm({
         defaultValues: {
             checkboxes: [{ checkbox: '' }],
@@ -21,6 +22,27 @@ export const CheckBox = ({ openModal, setOpenModal, setFormData }) => {
     });
 
     const onSubmit = (data) => {
+
+        if(editFlag){
+            setFormData((prev)=>{
+                const updateData = prev.map((formData)=>{
+                    if(formData.id === modalData.id){
+                        return {
+                            ...formData,
+                            data
+                        }
+                    }
+                    else{
+                        return formData;
+                    }
+                })
+                return updateData;
+            })
+            setEditFlag(false);
+            setModalData(null);
+            setEditOpenModal(false);
+            return;
+        }
         const fieldData = {
             id: Date.now(),
             data,
@@ -33,6 +55,22 @@ export const CheckBox = ({ openModal, setOpenModal, setFormData }) => {
         setOpenModal(false);
         reset();
     };
+
+    useEffect(()=>{
+        if(editFlag && editFlag){
+            setValue("checkboxName",modalData.data.checkboxName);
+            setValue("checkboxLabel",modalData.data.checkboxLabel);
+            //Write here
+        if (modalData.data.checkboxes && modalData.data.checkboxes.length > 0) {
+            // Clear existing options if any, then append new ones
+            reset({ options: [] }); // Reset 'options' array to an empty array first
+
+            modalData.data.checkboxes.forEach((option, index) => {
+                setValue(`checkboxes[${index}].checkbox`, option.option);
+            });
+        }
+    }
+    },[]);
 
 
     return (

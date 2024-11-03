@@ -1,16 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 
-export const Textarea = ({ openModal, setOpenModal,setFormData }) => {
+export const Textarea = ({ openModal, setOpenModal,setFormData, editFlag,setEditOpenModal ,setEditFlag , modalData, setModalData }) => {
 
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
+        setValue
     } = useForm();
 
     const onSubmit = (data) => {
+
+        if(editFlag){
+            setFormData((prev)=>{
+                const updateData = prev.map((formData)=>{
+                    if(formData.id === modalData.id){
+                        return {
+                            ...formData,
+                            data
+                        }
+                    }
+                    else{
+                        return formData;
+                    }
+                })
+                return updateData;
+            })
+            setEditFlag(false);
+            setModalData(null);
+            setEditOpenModal(false);
+            return;
+        }
+        
         const fieldData ={
             id:Date.now(),
             data,
@@ -23,6 +46,14 @@ export const Textarea = ({ openModal, setOpenModal,setFormData }) => {
         setOpenModal(false); 
         reset();
     };
+
+    useEffect(()=>{
+        if(editFlag && editFlag){
+            setValue("textareaName",modalData.data.textareaName);
+            setValue("textareaLabel",modalData.data.textareaLabel);
+            setValue("textareaRows",modalData.data.textareaRows);
+        }
+    },[]);
 
     return (
         <>
@@ -87,7 +118,7 @@ export const Textarea = ({ openModal, setOpenModal,setFormData }) => {
                         type="submit"
                         className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
                     >
-                        Add Textarea
+                       {editFlag ? "Save Textarea":"Add Textarea"}
                     </button>
                 </div>
             </form>

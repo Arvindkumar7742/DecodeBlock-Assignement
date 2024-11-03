@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { RxCross2 } from 'react-icons/rx';
 
-export const Dropdown = ({ openModal, setOpenModal, setFormData }) => {
+export const Dropdown = ({ openModal, setOpenModal, setFormData,editFlag,setEditOpenModal ,setEditFlag , modalData, setModalData }) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
         control,
         reset,
+        setValue
     } = useForm({
         defaultValues: {
             options: [{ option: '' }],
@@ -21,6 +22,28 @@ export const Dropdown = ({ openModal, setOpenModal, setFormData }) => {
     });
 
     const onSubmit = (data) => {
+
+        if(editFlag){
+            setFormData((prev)=>{
+                const updateData = prev.map((formData)=>{
+                    if(formData.id === modalData.id){
+                        return {
+                            ...formData,
+                            data
+                        }
+                    }
+                    else{
+                        return formData;
+                    }
+                })
+                return updateData;
+            })
+            setEditFlag(false);
+            setModalData(null);
+            setEditOpenModal(false);
+            return;
+        }
+
         const fieldData ={
             id:Date.now(),
             data,
@@ -34,7 +57,21 @@ export const Dropdown = ({ openModal, setOpenModal, setFormData }) => {
         reset();
     };
 
-    if (!openModal) return null;
+    useEffect(()=>{
+        if(editFlag && editFlag){
+            setValue("selectName",modalData.data.selectName);
+            setValue("labelName",modalData.data.labelName);
+            //Write here
+        if (modalData.data.options && modalData.data.options.length > 0) {
+            // Clear existing options if any, then append new ones
+            reset({ options: [] }); // Reset 'options' array to an empty array first
+
+            modalData.data.options.forEach((option, index) => {
+                setValue(`options[${index}].option`, option.option);
+            });
+        }
+    }
+    },[]);
 
     return (
         <>
@@ -116,7 +153,7 @@ export const Dropdown = ({ openModal, setOpenModal, setFormData }) => {
                         type="submit"
                         className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
                     >
-                        Add Dropdown
+                      {editFlag ? "Save Dropdown": "Add Dropdown"}
                     </button>
                 </div>
             </form>

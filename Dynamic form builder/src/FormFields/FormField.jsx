@@ -27,16 +27,16 @@ export const FormField = ({ formData, setFormData }) => {
                                 <div className='flex flex-row gap-2 items-center'>
 
                                     {
-                                        field.fieldType === "input" && (<InputField data={field.data} controls={controls} />)
+                                        field.fieldType === "input" && (<InputField data={field.data} id={field.id} setFormData={setFormData} controls={controls} />)
                                     }
                                     {
-                                        field.fieldType === "dropdown" && <DropdownField data={field.data} controls={controls} />
+                                        field.fieldType === "dropdown" && <DropdownField data={field.data} id={field.id} setFormData={setFormData} controls={controls} />
                                     }
                                     {
-                                        field.fieldType === "checkbox" && <CheckboxField data={field.data} controls={controls} />
+                                        field.fieldType === "checkbox" && <CheckboxField data={field.data} id={field.id} setFormData={setFormData} controls={controls} />
                                     }
                                     {
-                                        field.fieldType === "textarea" && <TextareaField data={field.data} controls={controls} />
+                                        field.fieldType === "textarea" && <TextareaField data={field.data} id={field.id} setFormData={setFormData} controls={controls} />
                                     }
                                 </div>
                             </Reorder.Item>

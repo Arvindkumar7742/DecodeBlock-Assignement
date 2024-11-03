@@ -1,16 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 
-export const Input = ({openModal,setOpenModal, setFormData}) => {
+export const Input = ({openModal,setOpenModal, setFormData,editFlag,setEditOpenModal ,setEditFlag , modalData, setModalData}) => {
 
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
+        setValue
     } = useForm();
 
     const onSubmit = (data) => {
+        if(editFlag){
+            setFormData((prev)=>{
+                const updateData = prev.map((formData)=>{
+                    if(formData.id === modalData.id){
+                        return {
+                            ...formData,
+                            data
+                        }
+                    }
+                    else{
+                        return formData;
+                    }
+                })
+                return updateData;
+            })
+            setEditFlag(false);
+            setModalData(null);
+            setEditOpenModal(false);
+            return;
+        }
         const fieldData ={
             id:Date.now(),
             data,
@@ -23,6 +44,14 @@ export const Input = ({openModal,setOpenModal, setFormData}) => {
         setOpenModal(false); 
         reset();
     };
+
+    useEffect(()=>{
+        if(editFlag && editFlag){
+            setValue("inputName",modalData.data.inputName);
+            setValue("labelName",modalData.data.labelName);
+            setValue("inputType",modalData.data.inputType);
+        }
+    },[]);
 
     return (
         <>
@@ -88,7 +117,7 @@ export const Input = ({openModal,setOpenModal, setFormData}) => {
                         type="submit"
                         className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
                     >
-                        Add Field
+                       {editFlag ? "Save field":"Add Field"}
                     </button>
                 </div>
             </form>
