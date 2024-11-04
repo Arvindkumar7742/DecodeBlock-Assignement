@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { json, useNavigate } from "react-router-dom";
+import { UserContext } from "../ContextAPI/UserContext";
 
 function Login() {
   const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users";
   const navigate = useNavigate();
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user,loginUser } = useContext(UserContext);
 
   const validateEmail = () => {
     var regex = /^([a-zA-z0-9\._]+)@([a-zA-z0-9]+)\.([a-z]+)(\.([a-z]+))?$/
@@ -50,7 +51,7 @@ function Login() {
       const flag = await checkUser();
       if (flag.exist) {
         toast.success("logged in successfully");
-        localStorage.setItem("blog-user",JSON.stringify(flag.user));
+        loginUser(flag.user);
         navigate(`/dashboard/my-profile`);
       }
       else {

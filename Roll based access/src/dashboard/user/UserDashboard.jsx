@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { AiOutlineLike } from "react-icons/ai";
+import { UserContext } from '../../ContextAPI/UserContext';
 
 export const UserDashboard = () => {
 
   const baseURl = "https://6724bca8c39fedae05b28c19.mockapi.io/posts";
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
   const [recentActivities, setRecentActivities] = useState([]);
 
   async function fetchData() {

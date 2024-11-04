@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaLongArrowAltRight, FaHeart } from "react-icons/fa";
+import { UserContext } from '../ContextAPI/UserContext';
 
 export const BlogCard = ({ blog }) => {
 
     const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/posts";
-    const user = JSON.parse(localStorage.getItem("blog-user"));
+    const { user } = useContext(UserContext);
     const [post_likes, setPostLikes] = useState(blog.likes); // State to hold the number of likes
     const [likedFlag,setLikedFlag] = useState(false);
 

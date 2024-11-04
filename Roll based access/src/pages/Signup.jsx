@@ -1,6 +1,7 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../ContextAPI/UserContext";
 
 function SignUp() {
   const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users"
@@ -10,7 +11,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [role, setRole] = useState("");
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
 
   const validateEmail = () => {
     var regex = /^([a-zA-z0-9\._]+)@([a-zA-z0-9]+)\.([a-z]+)(\.([a-z]+))?$/
@@ -88,10 +89,12 @@ function SignUp() {
     }
   }
 
-  if(user){
-    navigate("/dashboard/my-profile");
-    return;
-  }
+  useEffect(()=>{
+    if(user){
+      navigate("/dashboard/my-profile");
+      return;
+    }
+  },[]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-200">

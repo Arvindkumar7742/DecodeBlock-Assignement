@@ -1,11 +1,13 @@
 import toast from "react-hot-toast";
 import { FiTrash2 } from "react-icons/fi"
 import { useNavigate } from "react-router-dom"
+import { UserContext } from "../../ContextAPI/UserContext";
+import { useContext } from "react";
 
 export default function DeleteAccount() {
 
   const baseURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users";
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
   const navigate = useNavigate()
 
   async function handleDeleteAccount() {

@@ -1,14 +1,15 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useNavigate } from "react-router-dom"
 import IconBtn from "../../Components/IconBtn"
 import toast from "react-hot-toast"
+import { UserContext } from "../../ContextAPI/UserContext"
 
 export default function UpdatePassword() {
 
   const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users";
   const navigate = useNavigate()
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [currPassword, setCurrPassword] = useState(true);

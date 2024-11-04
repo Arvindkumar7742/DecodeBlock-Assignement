@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { sidebarLinks } from "./dashboard-links"
 import { SidebarLink } from './SidebarLink';
 import { useNavigate } from 'react-router-dom';
 import { VscSignOut } from "react-icons/vsc";
 import { Logoutmodal } from './Logoutmodal';
+import { UserContext } from '../ContextAPI/UserContext';
 
 export const Sidebar = () => {
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user,logoutUser } = useContext(UserContext);
   const [confirmationModal, setConfirmationmodal] = useState(null);
   const navigate = useNavigate();
 
@@ -35,7 +36,7 @@ export const Sidebar = () => {
               btn1: "Logout",
               btn2: "Cancel",
               onclick1: () => {
-                localStorage.clear();
+                logoutUser();
                 navigate("/");
               },
               onclick2: () => {

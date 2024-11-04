@@ -26,7 +26,7 @@ export const ManageUsers = () => {
     async function onDelete(userId) {
         try {
             await fetch(`${basURl}/${userId}`, { method: "DELETE" });
-            fetchUserData();
+            await fetchUserData();
             toast.success("User Deleted Successfully");
         } catch (error) {
             console.log("ERROR WHILE DELETING USER IN MANAGE USERS:::", error);

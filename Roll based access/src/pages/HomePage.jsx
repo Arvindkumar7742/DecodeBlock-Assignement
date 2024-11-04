@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../ContextAPI/UserContext";
 
 function HomePage() {
 
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-300 flex flex-col items-center justify-center">

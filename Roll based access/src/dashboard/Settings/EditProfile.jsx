@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import IconBtn from "../../Components/IconBtn"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { UserContext } from "../../ContextAPI/UserContext";
 
 export default function EditProfile() {
 
@@ -11,7 +12,7 @@ export default function EditProfile() {
   const [address,setAddress] = useState(null);
 
   const basURl = "https://6724bca8c39fedae05b28c19.mockapi.io/users";
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
 
   const submitProfileForm =async(e) => {
     e.preventDefault();

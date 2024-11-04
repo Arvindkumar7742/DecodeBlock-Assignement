@@ -1,9 +1,11 @@
 import { RiEditBoxLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import IconBtn from "../Components/IconBtn";
+import { UserContext } from "../ContextAPI/UserContext";
+import { useContext } from "react";
 
 export default function MyProfile() {
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (

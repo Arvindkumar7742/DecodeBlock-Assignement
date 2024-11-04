@@ -17,10 +17,12 @@ import { PrivateRoute } from "./pages/PrivateRoute"
 import { UserDashboard } from './dashboard/user/UserDashboard';
 import { ManageUsers } from './dashboard/admin/ManageUsers';
 import { AdminDashboard } from './dashboard/admin/AdminDashboard';
+import { useContext } from 'react';
+import { UserContext } from './ContextAPI/UserContext';
 
 function App() {
 
-  const user = JSON.parse(localStorage.getItem("blog-user"));
+  const { user } = useContext(UserContext);
 
   return (
     <div className="text-center">
