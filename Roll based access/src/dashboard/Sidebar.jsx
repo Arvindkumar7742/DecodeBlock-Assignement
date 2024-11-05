@@ -12,7 +12,7 @@ export const Sidebar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='flex flex-col gap-2 pt-[50px] bg-indigo-900 text-indigo-100 h-screen w-[15%]'>
+    <div className='flex flex-col gap-2 pt-[50px] bg-indigo-900 text-indigo-100 h-screen'>
       {
         sidebarLinks.map((item, index) => {
           if (item.type && user?.role !== item.type) {
