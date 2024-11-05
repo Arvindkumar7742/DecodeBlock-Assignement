@@ -58,4 +58,7 @@ npm install
 ```
 npm run start
 ```
-
+- Hosted Link
+```
+https://decode-block-assignement-5c83oud3t-arvinds-projects-fb7e13d5.vercel.app/
+```
