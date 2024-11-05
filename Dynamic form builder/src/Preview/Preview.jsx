@@ -88,9 +88,9 @@ export const Preview = () => {
                       <option value="" disabled selected>
                         Choose an option
                       </option>
-                      {field.data.options.map((optionObj, index) => (
-                        <option key={index} value={optionObj.option}>
-                          {optionObj.option}
+                      {field.data.options.map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
                         </option>
                       ))}
                     </select>
@@ -102,16 +102,16 @@ export const Preview = () => {
                   return (
                     <div className="mb-4" key={field.id}>
                       <label className="block text-gray-700 font-medium mb-2">{field.data.checkboxLabel}</label>
-                      {field.data.checkboxes.map((checkboxObj, index) => (
+                      {field.data.checkboxes.map((checkbox, index) => (
                         <div key={index} className="flex items-center mb-2">
                           <input
                             type="checkbox"
-                            id={`${field.data.checkboxName}-${index}`}
-                            {...register(`${field.data.checkboxName}.${checkboxObj.checkbox}`)} // Register with the checkbox label as the key
+                            id={`${checkbox}`}
+                            {...register(`${field.data.checkboxName}.${checkbox}`)} // Register with the checkbox label as the key
                             className="mr-2"
                           />
-                          <label htmlFor={`${field.data.checkboxName}-${index}`} className="text-gray-700">
-                            {checkboxObj.checkbox}
+                          <label htmlFor={`${checkbox}`} className="text-gray-700">
+                            {checkbox}
                           </label>
                         </div>
                       ))}

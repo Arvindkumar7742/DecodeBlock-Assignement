@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, useFieldArray } from 'react-hook-form';
 import { RxCross2 } from 'react-icons/rx';
 
-export const CheckBox = ({ openModal, setOpenModal, setFormData,editFlag,setEditOpenModal ,setEditFlag , modalData, setModalData }) => {
+export const CheckBox = ({ openModal, setOpenModal, setFormData, editFlag, setEditOpenModal, setEditFlag, modalData, setModalData }) => {
     const {
         register,
         handleSubmit,
@@ -10,29 +10,23 @@ export const CheckBox = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
         formState: { errors },
         reset,
         setValue
-    } = useForm({
-        defaultValues: {
-            checkboxes: [{ checkbox: '' }],
-        },
-    });
+    } = useForm();
 
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: 'checkboxes',
-    });
+    const [optionName, setOptionName] = useState("");
+    const [checkboxes, setCheckboxes] = useState([]);
 
     const onSubmit = (data) => {
 
-        if(editFlag){
-            setFormData((prev)=>{
-                const updateData = prev.map((formData)=>{
-                    if(formData.id === modalData.id){
+        if (editFlag) {
+            setFormData((prev) => {
+                const updateData = prev.map((formData) => {
+                    if (formData.id === modalData.id) {
                         return {
                             ...formData,
                             data
                         }
                     }
-                    else{
+                    else {
                         return formData;
                     }
                 })
@@ -56,21 +50,18 @@ export const CheckBox = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
         reset();
     };
 
-    useEffect(()=>{
-        if(editFlag && editFlag){
-            setValue("checkboxName",modalData.data.checkboxName);
-            setValue("checkboxLabel",modalData.data.checkboxLabel);
-            //Write here
-        if (modalData.data.checkboxes && modalData.data.checkboxes.length > 0) {
-            // Clear existing options if any, then append new ones
-            reset({ options: [] }); // Reset 'options' array to an empty array first
+    useEffect(() => {
+        setValue("checkboxes", checkboxes);
+    }, [checkboxes]);
 
-            modalData.data.checkboxes.forEach((option, index) => {
-                setValue(`checkboxes[${index}].checkbox`, option.option);
-            });
+    useEffect(() => {
+        if (editFlag && editFlag) {
+            setValue("checkboxName", modalData.data.checkboxName);
+            setValue("checkboxLabel", modalData.data.checkboxLabel);
+            setValue("checkboxes", modalData.data.checkboxes);
+            setCheckboxes(modalData.data.checkboxes);
         }
-    }
-    },[]);
+    }, []);
 
 
     return (
@@ -111,40 +102,47 @@ export const CheckBox = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
                     )}
                 </div>
 
-                {/* Dynamic Checkbox Options */}
-                <div>
-                    <label className="block text-gray-700 font-medium mb-2">Checkbox Options</label>
-                    <div className="space-y-2">
-                        {fields.map((field, index) => (
-                            <div key={field.id} className="flex items-center gap-2">
-                                <input
-                                    type="text"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                    placeholder={`Option ${index + 1}`}
-                                    {...register(`checkboxes.${index}.checkbox`, { required: "Option is required" })}
-                                />
-                                <button
-                                    type="button"
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
-                                    onClick={() => remove(index)}
-                                >
-                                    <RxCross2 size={20} />
-                                </button>
-                            </div>
-                        ))}
-                        {errors.checkboxes && errors.checkboxes.map((error, index) => (
-                            <p key={index} className="text-red-500 text-sm mt-1">{error.checkbox?.message}</p>
-                        ))}
-                    </div>
+                {/* checkbox Dynamic Field */}
+                <div className='flex flex-row gap-2 justify-center items-center'>
+                    <label className="block text-gray-700 font-medium mb-2">Add Checkbox</label>
 
+                    <input type="text"
+                        value={optionName}
+                        onChange={(e) => {
+                            setOptionName(e.target.value);
+                        }}
+                        className=" px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
                     <button
                         type="button"
-                        onClick={() => append({ checkbox: '' })}
                         className="mt-3 bg-green-500 text-white py-1 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-200"
+                        onClick={() => {
+                            if(optionName!==""){
+                            setCheckboxes((pre) => [...pre, optionName]);
+                            setOptionName("");
+                            }
+                        }}
                     >
-                        Add Option
+                        Add
                     </button>
                 </div>
+                {
+                    checkboxes.length > 0 &&
+                    <div className='flex flex-col gap-2 border-2 p-2 border-slate-400 rounded-md'>
+                        {
+                            checkboxes.map((checkbox, index) => (
+                                <p key={index}
+                                    className='flex flex-row gap-4 items-center border-2 rounded-lg p-1'
+                                > <span className=' p-1 break-all w-[90%]'>{index + 1}{". "}{checkbox}</span> <RxCross2
+                                        className='text-xl text-red-500 hover:bg-slate-400 cursor-pointer transition-all duration-150 rounded-full'
+                                        onClick={() => {
+                                            setCheckboxes((pre) => (pre.filter((option, i) => (i !== index))))
+                                        }}
+                                    /> </p>
+                            ))
+                        }
+                    </div>
+                }
 
                 {/* Submit Button */}
                 <div className="text-center">
@@ -152,7 +150,7 @@ export const CheckBox = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
                         type="submit"
                         className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
                     >
-                        Add Checkbox
+                        {editFlag ? "Save Checkbox": "Add Checkbox"}
                     </button>
                 </div>
             </form>

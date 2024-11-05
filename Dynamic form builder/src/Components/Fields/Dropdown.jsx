@@ -10,16 +10,10 @@ export const Dropdown = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
         control,
         reset,
         setValue
-    } = useForm({
-        defaultValues: {
-            options: [{ option: '' }],
-        },
-    });
+    } = useForm();
 
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: 'options',
-    });
+    const [optionName,setOptionName] = useState("");
+    const [optionsList,setOptionsList] = useState([]);
 
     const onSubmit = (data) => {
 
@@ -49,6 +43,7 @@ export const Dropdown = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
             data,
             fieldType:openModal.field,
         }
+        
         setFormData((prev)=>{
             prev.push(fieldData);
             return prev;
@@ -58,25 +53,22 @@ export const Dropdown = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
     };
 
     useEffect(()=>{
+        setValue("options",optionsList);
+    },[optionsList]);
+
+    useEffect(()=>{
         if(editFlag && editFlag){
             setValue("selectName",modalData.data.selectName);
             setValue("labelName",modalData.data.labelName);
-            //Write here
-        if (modalData.data.options && modalData.data.options.length > 0) {
-            // Clear existing options if any, then append new ones
-            reset({ options: [] }); // Reset 'options' array to an empty array first
-
-            modalData.data.options.forEach((option, index) => {
-                setValue(`options[${index}].option`, option.option);
-            });
-        }
+            setValue("options",modalData.data.options);
+            setOptionsList(modalData.data.options);
     }
     },[]);
 
     return (
         <>
 
-            <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">Add Dropdown Field</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6 ">Add Dropdown Field</h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
@@ -113,39 +105,44 @@ export const Dropdown = ({ openModal, setOpenModal, setFormData,editFlag,setEdit
                 </div>
 
                 {/* Options Dynamic Field */}
-                <div>
-                    <label className="block text-gray-700 font-medium mb-2">Dropdown Options</label>
-                    <div className="space-y-2">
-                        {fields.map((field, index) => (
-                            <div key={field.id} className="flex items-center gap-2">
-                                <input
-                                    type="text"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                                    placeholder={`Option ${index + 1}`}
-                                    {...register(`options.${index}.option`, { required: "Option is required" })}
-                                />
-                                <button
-                                    type="button"
-                                    className="text-red-500 hover:text-red-700 focus:outline-none"
-                                    onClick={() => remove(index)}
-                                >
-                                    <RxCross2 size={20} />
-                                </button>
-                            </div>
-                        ))}
-                        {errors.options && errors.options.map((error, index) => (
-                            <p key={index} className="text-red-500 text-sm mt-1">{error.option?.message}</p>
-                        ))}
-                    </div>
-
+                <div className='flex flex-row gap-2 justify-center items-center'>
+                    <label className="block text-gray-700 font-medium mb-2">Dropdown Option</label>
+                  
+                  <input type="text" 
+                  value={optionName}
+                  onChange={(e)=>{
+                    setOptionName(e.target.value);
+                  }} 
+                  className=" px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
                     <button
                         type="button"
-                        onClick={() => append({ option: '' })}
                         className="mt-3 bg-green-500 text-white py-1 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition duration-200"
+                        onClick={()=>{
+                            setOptionsList((pre)=>[...pre,optionName]);
+                            setOptionName("");
+                        }}
                     >
-                        Add Option
+                        Add
                     </button>
                 </div>
+                {
+                    optionsList.length >0 &&
+                    <div className='flex flex-col border-2 p-2 border-slate-400 rounded-md'>
+                    {
+                        optionsList.map((option,index)=>(
+                            <p key={index}
+                            className='flex flex-row gap-4 items-center'
+                            > <span className=' p-1 break-all w-[90%]'>{index+1}{". "}{option}</span> <RxCross2 
+                            className='text-xl text-red-500 hover:bg-slate-400 cursor-pointer transition-all duration-150 rounded-full'
+                            onClick={()=>{
+                                setOptionsList((pre)=>(pre.filter((option,i)=>(i!==index))))
+                            }}
+                            /> </p>
+                        ))
+                    }
+                </div>
+                }
 
                 {/* Submit Button */}
                 <div className="text-center">

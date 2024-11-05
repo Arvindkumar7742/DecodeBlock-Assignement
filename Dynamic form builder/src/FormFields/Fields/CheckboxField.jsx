@@ -28,17 +28,17 @@ export const CheckboxField = ({ data,id, setFormData}) => {
       </label>
 
       <div className="flex flex-row gap-2 flex-grow">
-        {data.checkboxes.map((checkboxObj, index) => (
+        {data.checkboxes.map((checkbox, index) => (
           <div key={index} className="flex items-center gap-2">
             <input
               type="checkbox"
-              id={`${data.checkbox}-${index}`}
-              name={data.checkbox}
-              value={checkboxObj.checkbox}
+              id={`${checkbox}`}
+              name={checkbox}
+              value={checkbox}
               className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
-            <label htmlFor={`${data.checkbox}-${index}`} className="text-gray-700">
-              {checkboxObj.checkbox}
+            <label htmlFor={`${checkbox}`} className="text-gray-700">
+              {checkbox}
             </label>
           </div>
         ))}

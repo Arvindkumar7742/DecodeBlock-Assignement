@@ -5,17 +5,17 @@ import { Dropdown } from './Fields/Dropdown';
 import { CheckBox } from './Fields/CheckBox';
 import { Textarea } from './Fields/Textarea';
 
-export const Modal = ({ openModal, setOpenModal, setFormData ,editFlag,setEditOpenModal ,setEditFlag , modalData, setModalData
- }) => {
+export const Modal = ({ openModal, setOpenModal, setFormData, editFlag, setEditOpenModal, setEditFlag, modalData, setModalData
+}) => {
 
     if (!openModal) return null;
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative mx-4">
+            <div className="bg-white w-full max-w-md p-6 min-h-[200px] rounded-lg shadow-lg relative mx-4 max-h-screen overflow-y-auto">
                 <button
                     onClick={() => {
-                        if(editFlag){
+                        if (editFlag) {
                             setEditFlag(false);
                             setEditOpenModal(false);
                             setModalData(null);
@@ -28,21 +28,17 @@ export const Modal = ({ openModal, setOpenModal, setFormData ,editFlag,setEditOp
                     <RxCross2 size={24} />
                 </button>
                 {
-                    openModal.field == "input" && <Input openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData}
-                    editFlag={editFlag} setEditOpenModal={setEditOpenModal}  setEditFlag={setEditFlag} modalData={modalData} setModalData={setModalData}
+                    openModal.field == "input" && <Input  {...{ openModal, setOpenModal, setFormData, editFlag, setEditOpenModal, setEditFlag, modalData, setModalData }}
                     />
                 }
                 {
-                    openModal.field == "dropdown" && <Dropdown openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData}
-                    editFlag={editFlag} setEditOpenModal={setEditOpenModal}  setEditFlag={setEditFlag} modalData={modalData} setModalData={setModalData}/>
+                    openModal.field == "dropdown" && <Dropdown  {...{ openModal, setOpenModal, setFormData, editFlag, setEditOpenModal, setEditFlag, modalData, setModalData }} />
                 }
                 {
-                    openModal.field == "checkbox" && <CheckBox openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData}
-                    editFlag={editFlag} setEditOpenModal={setEditOpenModal}  setEditFlag={setEditFlag} modalData={modalData} setModalData={setModalData}/>
+                    openModal.field == "checkbox" && <CheckBox  {...{ openModal, setOpenModal, setFormData, editFlag, setEditOpenModal, setEditFlag, modalData, setModalData }} />
                 }
                 {
-                    openModal.field == "textarea" && <Textarea openModal={openModal} setOpenModal={setOpenModal} setFormData={setFormData}
-                    editFlag={editFlag} setEditOpenModal={setEditOpenModal}  setEditFlag={setEditFlag} modalData={modalData} setModalData={setModalData}/>
+                    openModal.field == "textarea" && <Textarea  {...{ openModal, setOpenModal, setFormData, editFlag, setEditOpenModal, setEditFlag, modalData, setModalData }} />
                 }
             </div>
         </div>
